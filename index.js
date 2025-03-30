@@ -143,7 +143,7 @@ telegramBot.onText(/\/get_currency_uan_to_ruble/, async (msg) => {
   const summaryText = await generateSummary(data);
   
   await telegramBot.sendPhoto(chatId, chartImage, {
-    caption: `Взято с API https://cbr.ru/development/SXML/\n\nКурс Юаня к Рублю\n\n${summaryText}`,
+    caption: `Взято с API https://cbr.ru/development/SXML/\n\nКурс Юаня\n\n${summaryText}`,
     parse_mode: "Markdown"
   });
 });
