@@ -124,6 +124,7 @@ async function generateSummary(data) {
   
   let summaryDescription = `\nКурс ${trend5d} за 5 дней на **${Math.abs(difference5d)} ₽**`;
   summaryDescription += `\nКурс ${trend1d} за 1 день на **${Math.abs(difference1d)} ₽**\n`;
+  summaryDescription += `\nКурс на сегодня: **${last} ₽**\n`;
   summaryDescription += `\nПрогноз на завтра: **${forecast} ₽**`;
   
   return summaryDescription;
