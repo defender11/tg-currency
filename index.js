@@ -119,9 +119,14 @@ async function generateSummary(data) {
   const trend1d = difference1d > 0 ? "📈 вырос" : "📉 упал";
   
   const dailyChange = (difference5d / 5).toFixed(4);
+  
   const forecast = (last + parseFloat(dailyChange)).toFixed(4);
   
-  return `\nКурс ${trend5d} за 5 дней на **${Math.abs(difference5d)} ₽**\nКурс ${trend1d} за 1 день на **${Math.abs(difference1d)} ₽**\n\nПрогноз на завтра: **${forecast} ₽**`;
+  let summaryDescription = `\nКурс ${trend5d} за 5 дней на **${Math.abs(difference5d)} ₽**`;
+  summaryDescription += `\nКурс ${trend1d} за 1 день на **${Math.abs(difference1d)} ₽**\n`;
+  summaryDescription += `\nПрогноз на завтра: **${forecast} ₽**`;
+  
+  return summaryDescription;
 }
 
 telegramBot.onText(/\/get_currency_uan_to_ruble/, async (msg) => {
@@ -136,7 +141,10 @@ telegramBot.onText(/\/get_currency_uan_to_ruble/, async (msg) => {
   const chartImage = await generateChart(data);
   const summaryText = await generateSummary(data);
   
-  await telegramBot.sendPhoto(chatId, chartImage, { caption: `Курс Юаня к Рублю\n${summaryText}`, parse_mode: "Markdown" });
+  await telegramBot.sendPhoto(chatId, chartImage, {
+    caption: `Взято с API https://cbr.ru/development/SXML/\n\nКурс Юаня к Рублю\n\n${summaryText}`,
+    parse_mode: "Markdown"
+  });
 });
 
 console.log('Бот запущен...');
